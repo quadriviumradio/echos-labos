@@ -1,0 +1,139 @@
+// Style Olivier et Stephan
+
+@font-face {
+    font-family: 'code';
+    src: url('../font/code_pro_demo-webfont.eot');
+    src: url('../font/code_pro_demo-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/code_pro_demo-webfont.woff') format('woff'),
+         url('../font/code_pro_demo-webfont.ttf') format('truetype'),
+         url('../font/code_pro_demo-webfont.svg#code_pro_demoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'droid';
+    src: url('../font/droidsans-webfont.eot');
+    src: url('../font/droidsans-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/droidsans-webfont.woff') format('woff'),
+         url('../font/droidsans-webfont.ttf') format('truetype'),
+         url('../font/droidsans-webfont.svg#code_pro_demoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@serifFontFamily: 			'code';
+@sansFontFamily:        'droid';
+
+// COLOR
+
+@blueCyan: 							#009ee0;
+
+
+h1 {
+	font-family: @serifFontFamily;
+}
+h2 {
+	font-family: @serifFontFamily;
+}
+// icones
+.ico-map {
+	display: block;
+	background:url(../img/ico.png) no-repeat 0 0;
+	width: 40px;
+	height: 40px;
+}
+.ico-setting {
+	display: block;
+	background:url(../img/ico.png) no-repeat 0 -40px;
+	width: 40px;
+	height: 40px;
+}
+.ico-picture {
+	display: block;
+	background:url(../img/ico.png) no-repeat 0 -80px;
+	width: 40px;
+	height: 40px;
+}
+
+
+
+// CSS 
+body {
+	background: url(../img/bg-noise.png);
+	font-family: @sansFontFamily;
+	color: white;
+}
+.container {
+	width: 640px;
+}
+.menu {
+	border-bottom: 5px solid #000;
+	p {
+		color: @blueCyan;
+		font-style: italic;
+		font-size: 17px;
+		padding-top: 5px;
+	}
+	.span6 {
+		padding: 10px 0 0 25px;
+		width: 55%;
+	}
+	.span2 {
+		margin:0;
+		height: 100px;
+		border-left: 1px solid #000;
+		i { margin: 30px auto;}
+		}
+}
+.map {
+	padding: 25px;
+}
+.content {
+	padding: 0 25px 25px;
+	width: 590px;
+	.span4 { background: @blueCyan;}
+	.title {
+		background: #2B2B2B url(../img/bg-title.png) no-repeat;
+		height:175px;
+		padding: 1px 10px;
+		p { width: 70px; padding-left: 10px; color: #ccc; }
+
+	}
+	h1 {
+		font-size : 18px;
+		font-weight: normal;
+		padding-left: 10px;
+	}
+	
+}
+.module {
+	background: @blueCyan;
+	min-height: 98px;
+	h2 {
+		font-weight:normal;
+		padding-left: 20px;
+		margin-bottom: 0;
+	}
+	p {
+		font-family: @serifFontFamily;
+		font-size:17px;
+		text-transform: uppercase;
+		padding-left: 20px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
