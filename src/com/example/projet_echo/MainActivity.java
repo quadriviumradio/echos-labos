@@ -14,17 +14,23 @@ import android.webkit.WebView;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.DroidGap;
 public class MainActivity extends DroidGap {
-	protected float ORIG_APP_W = 320;
-    protected float ORIG_APP_H = 480;
+	protected float ORIG_APP_W = 640;
+    protected float ORIG_APP_H = 960;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setIntegerProperty("loadUrlTimeoutValue", 300000);  
 		super.loadUrl("file:///android_asset/www/index.html");
 		WebSettings ws = super.appView.getSettings();
-        ws.setSupportZoom(true);
+	     Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+	     int width = display.getWidth(); 
+	     int height = display.getHeight(); 
+	     double globalScale = Math.ceil( ( width / ORIG_APP_W ) * 100 );
+	     this.appView.setInitialScale( (int)globalScale );
+        ws.setSupportZoom(false);
         ws.setBuiltInZoomControls(false); 
-        ws.setDefaultZoom(ZoomDensity.FAR);
+//        ws.setDefaultZoom(ZoomDensity.);
+        
 	}
 
 	@Override
