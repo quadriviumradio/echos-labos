@@ -15,7 +15,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 	
     <!-- link href="css/bootstrap-responsive.css" rel="stylesheet" -->
-	<link href="css/jquery.mobile.css" rel="stylesheet">
+	<!--link href="css/jquery.mobile.css" rel="stylesheet"-->
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,6 +29,10 @@
                                    <link rel="shortcut icon" href="ico/favicon.png">
 	<script type="text/template" id="template"> </script>
 
+	  <script src="js/tests/vendor/jquery.js"></script>
+	<!--script src="js/audiojs/audio.min.js"></script-->
+
+
   </head>
 
   <body data-spy="scroll" data-target=".bs-docs-sidebar" onload="init()">
@@ -41,7 +45,7 @@
         </div>
         <div class="span2"><a href="#"><i class="ico-map"></i></a></div>
         <div class="span2"><a href="#"><i class="ico-setting"></i></a></div>
-        <div class="span2" onclick="afficherGrandeGallerie()"><a href="#"><i class="ico-picture"></i></a></div>
+        <div class="span2" onclick="afficherGrandeGalerie()"><a href="#"><i class="ico-picture"></i></a></div>
       </div>
       <div class="row map" id="map">
         <div class="span 12">
@@ -55,7 +59,9 @@
 		</div>
 		</div>
 		<div id ="geotest">
+		
 		</div>
+	
 	</div>
 	</div>
     <!-- Le javascript
@@ -66,8 +72,8 @@
 	 <script type="text/javascript" charset="utf-8" src="cordova-2.3.0.js"></script>
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	
-    <script src="js/tests/vendor/jquery.js"></script>
-	<script src="js/jquery.mobile.js"></script>
+	
+
     <script src="js/bootstrap-transition.js"></script>
     <script src="js/bootstrap-alert.js"></script>
     <script src="js/bootstrap-modal.js"></script>
@@ -83,9 +89,15 @@
     <script src="js/bootstrap-affix.js"></script>
 	<script src="js/underscore-min.js"></script>
  <script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
+	<script src="js/mediaelementplayer/mediaelement-and-player.min.js"></script>
+	<link rel="stylesheet" href="js/mediaelementplayer/mediaelementplayer.css" />
+	<script>
+     
+$('video,audio').mediaelementplayer();
 
-	<script src="js/script.js"></script>
+    </script>
 	
+	<script src="js/script.js"></script>
 	
 	<script type="text/template" id="templateHomepage">
 	<div class='span4' onclick='afficherLabo(<%=labo.id%>)'>
@@ -102,7 +114,7 @@
 			<div class='span2'> 
 			<i class="ico-comment"></i>
 			</div>
-			<div class='span2' onclick='afficherGallerie(<%=labo.id%>)'> 
+			<div class='span2' onclick='afficherGalerie(<%=labo.id%>)'> 
 			<i class="ico-photo"></i>
 			</div>
 			<div class='span8'> 
@@ -113,12 +125,12 @@
 			<div class='span6'> 
 			<img src='<%=labo.photos[0].file%>'> 
 			</div>
-			<div class='span6'>
+			<div class='span6' id="info-labo">
 				 <div class='module'> 
 					<h2><%=labo.name%></h2>
 					<p><%=labo.sound.title%></p>
 				  </div>	
-				  <audio id ="player" controls="controls"> 
+				   <audio id ="player" controls="controls"> 
 				<source src='<%=labo.sound.file%>'>
 				</audio>
 			</div>	
@@ -131,12 +143,13 @@
 		<img src='<%=file%>' />
 	</div>
 	</script>
-	<script type="text/template" id="templateGallerie">
-		<div class='span4'onclick='afficherGallerie(<%=labo.id%>)'>
+	<script type="text/template" id="templateGalerie">
+		<div class='span4'onclick='afficherGalerie(<%=labo.id%>)'>
 		<p><img src='<%=labo.photos[0].file%>'</p>
 		<p> <%=labo.name%> </p>
 		</div>
 		
 	</script>
+	
   </body>
 </html>
