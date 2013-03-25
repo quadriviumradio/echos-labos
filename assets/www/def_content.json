@@ -1,0 +1,151 @@
+[{
+	"labo" : {
+		"id" : "0",
+		"name" : "INTRO",
+		"gps" : {
+			"x" : "43.231396",
+			"y" : "5.439964"
+		},
+		"guidingFile" : "http://...aaa.mp3",
+		"sound" : {
+			"title": "L'histoire du campus",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.mp3",
+			"speaker" : ""
+		},
+		"photos" : [
+			{
+				"file" : "img/img-luminy.png",
+				"legend" : "Le CIRM a son propre fuseau horaire comme en témoignent les pendules de la salle de restauration."
+				
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_heure.jpeg",
+				"legend" : "Le CIRM a son propre fuseau horaire comme en témoignent les pendules de la salle de restauration."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_maths.jpeg",
+				"legend" : "La bibliothèque du CIRM a un fond de plus de 30000 ouvrages hors périodiques."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_conference.jpg",
+				"legend" : "Une des présentations de l'école d'hiver du CIRM qui regroupe des jeunes chercheurs du monde entier."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_pause.jpeg",
+				"legend" : "Même durant la pause déjeuner, les échanges ne s'arrêtent pas !"
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_bastide.jpeg",
+				"legend" : "Le CIRM est installé dans une ancienne bastide. Chapelle, écuries, pigeonniers... sont encore visibles sur le site."
+			}
+		]
+	}
+},
+{
+	"labo" : {
+		"id" : "1",
+		"name" : "CIRM",
+		"gps" : {
+			"x" : "43.230274",
+			"y" : "5.443228"
+		},
+		"guidingFile" : "http://...aaa.mp3",
+		"sound" : {
+			"title": "Conf de maths au soleil !",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.ogg",
+			"speaker" : "Eric Picaud"
+		},
+		"photos" : [
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_heure.jpeg",
+				"legend" : "Le CIRM a son propre fuseau horaire comme en témoignent les pendules de la salle de restauration."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_maths.jpeg",
+				"legend" : "La bibliothèque du CIRM a un fond de plus de 30000 ouvrages hors périodiques."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_conference.jpg",
+				"legend" : "Une des présentations de l'école d'hiver du CIRM qui regroupe des jeunes chercheurs du monde entier."
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_pause.jpeg",
+				"legend" : "Même durant la pause déjeuner, les échanges ne s'arrêtent pas !"
+			},
+			{
+				"file" : "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/cirm_bastide.jpeg",
+				"legend" : "Le CIRM est installé dans une ancienne bastide. Chapelle, écuries, pigeonniers... sont encore visibles sur le site."
+			}
+		]
+	}
+},
+{
+	"labo" : {
+		"id" : "2",
+		"name" : "CIML",
+		"gps" : {
+			"x" : "43.230274",
+			"y" : "5.443228"
+		},
+		"guidingFile" : "http://...aaa.mp3",
+		"sound" : {
+			"title": "L'immunologie",
+			"file": "/android_asset/www/knock.mp3",
+			"speaker" : "Eric Vivier"
+		},
+		"photos" : [
+			
+			{
+				"file" : "img/img-1.png",
+				"legend" : "Le CIRM est installé dans une ancienne bastide. Chapelle, écuries, pigeonniers... sont encore visibles sur le site."
+			}
+		]
+	}
+},
+{
+	"labo" : {
+		"id" : "3",
+		"name" : "IBDML",
+		"gps" : {
+			"x" : "43.230274",
+			"y" : "5.443228"
+		},
+		"guidingFile" : "http://...aaa.mp3",
+		"sound" : {
+			"title": "Les drosophiles",
+			"file": "file:///android_asset/www/knock.mp3",
+			"speaker" : "Nicolas Gompel"
+		},
+		"photos" : [
+			
+			{
+				"file" : "img/img-2.png",
+				"legend" : "Le CIRM est installé dans une ancienne bastide. Chapelle, écuries, pigeonniers... sont encore visibles sur le site."
+			}
+		]
+	}
+},
+ {
+	"labo" : {
+		"id" : "4",
+		"name" : "CINAM",
+		"gps" : {
+			"x" : "43.230274",
+			"y" : "5.443228"
+		},
+		"guidingFile" : "http://...aaa.mp3",
+		"sound" : {
+			"title": "",
+			"file": "knock.mp3",
+			"speaker" : "E."
+		},
+		"photos" : [
+			
+			{
+				"file" : "img/img-3.png",
+				"legend" : "Le CIRM est installé dans une ancienne bastide. Chapelle, écuries, pigeonniers... sont encore visibles sur le site."
+			}
+		]
+	}
+}
+]
