@@ -90,7 +90,7 @@
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
 			"title": "L'immunologie",
-			"file": "/android_asset/www/knock.mp3",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.mp3",
 			"speaker" : "Eric Vivier"
 		},
 		"photos" : [

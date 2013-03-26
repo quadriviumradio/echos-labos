@@ -3,7 +3,7 @@
  document.addEventListener("deviceready", onDeviceReady, false);
 
  function init() {
-	genererCarte();
+
  }
 var nextLabId=0;
 var nextLabLat=0;
@@ -11,7 +11,7 @@ var nextLabLng=0;
 var watchID;
 var lastLabId=0;
 var GeoMarker ;
-
+var photoSwipe;
 var userPosition = new google.maps.Marker({
 					position: null,
 					map: null
@@ -28,7 +28,7 @@ function onDeviceReady() {
 	 if (!navigator.geolocation) {
 		alert("Impossible de trouver la géolocalisation");
 	}
-	options = {enableHighAccuracy:true,frequency:2000 };
+	
 	//navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 	
 	//options = { timeout: 2000 };
@@ -50,8 +50,13 @@ $(document).ready(function(){
 	$('#titreglobal').click(function() {
 		reinitialiserContenu();
 	});
+	mapheight = $('.map').height();
 	//tableau de booléens : la galerie d'un labo est activée si l'on a visité sa fiche et si l'on a écouté le son correspondant jusqu'à la fin
 	galleryUnlocked= new Array();
+	options = {enableHighAccuracy:true,frequency:2000 };
+	// pour gallerie photoswipe
+	genererCarte();
+	
 	
 });
 
@@ -81,8 +86,9 @@ function onSuccess(position) { //si geolocalisation réussie
 		gmap.panTo(userCoord);
 	}
 	//si la position a changé, regarder si l'on est près du prochain laboratoire et, si oui, afficher sa fiche
-	var margin=0.00025
-	 if (position.coords.latitude>=nextLabLat-margin && position.coords.latitude<=nextLabLat+margin &&  position.coords.longitude>=nextLabLg-margin && position.coords.longitude<=nextLabLng+margin)
+	var margin=0.000025;
+	
+	 if (position.coords.latitude>=nextLabLat-margin && position.coords.latitude<=nextLabLat+margin &&  position.coords.longitude>=nextLabLng-margin && position.coords.longitude<=nextLabLng+margin)
 		afficherLabo(nextLabId);
 	//alert('Latitude: '          + position.coords.latitude);
 }
@@ -97,29 +103,33 @@ function reinitialiserContenu() {
 	// si activée à partir de la fiche d'un labo
 	if (page=="labo") 
 		{
-		$('#map2').replaceWith(map);
+		$('#map2').hide();
+		$('#map').show();
 		$('.map').animate({
-	   height:($('.map').height()/2)
+	   height:(mapheight)
 	   },400);
 	  
 	}
 	// si activée à partir de la galerie
 	else if (page=="galerie") {
-		var previousheight = $('.map').height();
-		$("#map2").replaceWith(map);
-		$('.map').height(previousheight/2);
+		$("#map").show();
+		$("#map2").hide();
+		$('.map').height(mapheight);
 		
 	}
 	else if (page=="grande galerie labo") {
 		$("#map").show();
-		var previousheight = $('.map').height();
 		
-		$("#map2").replaceWith(map);
-		$('.map').height(previousheight/2);
+		
+		$("#map2").hide();
+		$('.map').height(mapheight);
 	
 	}
 	else if (page=="grande galerie") {
 		$("#map").show();
+		
+		$("#map2").hide();
+		$('.map').height(mapheight);
 	}
 	page="home";
 }
@@ -138,10 +148,10 @@ function initialiserHomepage() {
 	//parcours du fichier json
 	$.getJSON('def_content.json', function(item,index) {
 		$.each(item,function(index) {
-			galleryUnlocked.push(false);
+			galleryUnlocked.push(true);
 			if (item[index].labo.id==nextLabId) {
-				nextLabLat=item[index].labo.gps.x;
-				nextLabLng=item[index].labo.gps.y;
+				nextLabLat=parseFloat(item[index].labo.gps.x);
+				nextLabLng=parseFloat(item[index].labo.gps.y);
 			}
 			if (item[index].labo.id>lastLabId) {
 				lastLabId=item[index].labo.id;
@@ -170,14 +180,16 @@ function afficherLabo(num) {
 	if (watchID!= undefined)
 		navigator.geolocation.clearWatch(watchID);
 	//taille et affichage de la carte
-	$('.map').animate({
-	   height:($('.map').height()*2)
-	   },400);
-	map=$('#map').replaceWith(map2)
-	$('#map2').show();
+	if (page=="home") {
+		$('#map2').show();
+		$('.map').animate({
+		   height:(mapheight*2)
+		   },400);
+		$('#map').hide();
+		 
 	
-	setTimeout("google.maps.event.trigger(gmap, 'resize')",400);
-	
+		setTimeout("google.maps.event.trigger(gmap, 'resize')",400);
+	}
 	//parcours du json
 	$.getJSON('def_content.json', function(item,index) {
 		$.each(item,function(index) {
@@ -187,7 +199,7 @@ function afficherLabo(num) {
 				gmap.setCenter(new google.maps.LatLng(item[index].labo.gps.x,item[index].labo.gps.y))
 				
 				$("#contenu").html(templateLabo(item[index]));
-				$('video,audio').mediaelementplayer({ audioWidth: 290});
+				$('video,audio').mediaelementplayer({ audioWidth: 290,audioHeight:60});
 				//phonegapmedia=new Media(item[index].labo.sound.file);
 				
 				
@@ -206,8 +218,8 @@ function afficherLabo(num) {
 			if (item[index].labo.id==num+1)
 				{
 				//prend les coordonnées du prochain labo
-				nextLabLat = item[index].labo.gps.x;
-				nextLabLng = item[index].labo.gps.y;
+				nextLabLat = parseFloat(item[index].labo.gps.x);
+				nextLabLng = parseFloat(item[index].labo.gps.y);
 				return false;
 				}
 			/*else if (num==lastLabId) {
@@ -237,8 +249,8 @@ function afficherLabo(num) {
 function afficherGrandeGalerie() { // affiche la liste des laboratoires dont la galerie est débloquée
 	if (page== "labo") page="grande galerie labo";
 	else  page="grande galerie";
-	$('#map2').hide();   			//cache la carte
-	$('#map').hide();
+	$('.map').hide();   			//cache la carte
+
 	galleryContentHTML="";
 	galleryContentHTML+="<div> Galeries </div>";
 	var i=0;
@@ -246,23 +258,19 @@ function afficherGrandeGalerie() { // affiche la liste des laboratoires dont la 
 		$.each(item,function(index) {
 			if (galleryUnlocked[item[index].labo.id]==true) {		// vérifie que la galerie est débloquée
 				
-				galleryContentHTML+="<div class=row-fluid content>";
+				galleryContentHTML+="<ul class='gallery'>";
 			 
-			   if (i==3)
-					{
-					galleryContentHTML+="</div> \
-						<div class='row-fluid content'>";
-					i=0;
-				}
+			 
 			galleryContentHTML+=(templateGalerie(item[index]));
-			i++;
+			
 			
 				
 				
 			}
 		});
-		galleryContentHTML+="</div>";
+		galleryContentHTML+="</ul>";
 		$("#contenu").html(galleryContentHTML);
+		
 	});
 
 }
@@ -272,21 +280,21 @@ function afficherGalerie(num) {  		// affiche la galerie d'un laboratoire
 	
 	if (galleryUnlocked[num]==true) {
 		page="galerie";
-		$('#map2').hide(); // cache la carte pour laisser la place à l'affichage de la galerie
+		$('.map').hide(); // cache la carte pour laisser la place à l'affichage de la galerie
 		var i=0;
 		galleryContentHTML="";
 		$.getJSON('def_content.json', function(item,index) {
 			$.each(item,function(index) {
 				if (item[index].labo.id==num) {
-					galleryContentHTML+="<div> Galerie </div>";
-					galleryContentHTML+="<div class=row-fluid content>";
+					//galleryContentHTML+="<div> Galerie </div>";
+					galleryContentHTML+="<ul id='Gallery' class='gallery'>";
 				   $.each(item[index].labo.photos,function(index2) {   
-				   if (i==3)
+				   /*if (i==3)
 						{
 						galleryContentHTML+="</div> \
 							<div class='row-fluid content'>";
 						i=0;
-					}
+					}*/
 					galleryContentHTML+=(templatePhotos(item[index].labo.photos[index2]));
 					i++;
 				
@@ -295,8 +303,10 @@ function afficherGalerie(num) {  		// affiche la galerie d'un laboratoire
 					return false;
 				}
 			});
-		galleryContentHTML+="</div>";
+		galleryContentHTML+="</ul>";
 		$("#contenu").html(galleryContentHTML);
+		
+		photoSwipe = $("#Gallery a").photoSwipe({captionAndToolbarAutoHideDelay:0});
 		});
 	
 	

@@ -45,6 +45,7 @@ public class MainActivity extends DroidGap {
 	     this.appView.setInitialScale( (int)globalScale );
         ws.setSupportZoom(false);
         ws.setBuiltInZoomControls(false); 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 //        ws.setDefaultZoom(ZoomDensity.FAR);
         
 	}

@@ -13,7 +13,7 @@
 	
 	
     <link href="css/bootstrap.css" rel="stylesheet">
-	
+	 <link href="js/photoswipe/photoswipe.css" rel="stylesheet">
     <!-- link href="css/bootstrap-responsive.css" rel="stylesheet" -->
 	<!--link href="css/jquery.mobile.css" rel="stylesheet"-->
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -88,6 +88,7 @@
     <script src="js/bootstrap-typeahead.js"></script>
     <script src="js/bootstrap-affix.js"></script>
 	<script src="js/underscore-min.js"></script>
+	<!--script src="js/jquery.mobile.js"></script-->
  <script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
 	<script src="js/mediaelementplayer/mediaelement-and-player.min.js"></script>
 	<link rel="stylesheet" href="js/mediaelementplayer/mediaelementplayer.css" />
@@ -96,7 +97,8 @@
 $('video,audio').mediaelementplayer();
 
     </script>
-	
+	<script src="js/photoswipe/lib/klass.min.js"></script>
+	<script src="js/photoswipe/code.photoswipe-3.0.5.js"></script>
 	<script src="js/script.js"></script>
 	
 	<script type="text/template" id="templateHomepage">
@@ -139,15 +141,16 @@ $('video,audio').mediaelementplayer();
 	</script>
 
 	<script type="text/template" id="templatePhotos">
-		<div class='span4'onclick='afficherPhoto(<%=file%>)'>
-		<img src='<%=file%>' />
-	</div>
-	</script>
+		<li> <a href='<%=file%>'> 
+		
+		<img src='<%=file%>' alt='<%=legend.split("'").join("&#39;")%>'/> 
+	</a> </li>
+ 	</script>
 	<script type="text/template" id="templateGalerie">
-		<div class='span4'onclick='afficherGalerie(<%=labo.id%>)'>
+		<li> <a onclick='afficherGalerie(<%=labo.id%>)'>
 		<p><img src='<%=labo.photos[0].file%>'</p>
 		<p> <%=labo.name%> </p>
-		</div>
+		</li>
 		
 	</script>
 	
