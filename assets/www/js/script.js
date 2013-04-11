@@ -5,6 +5,11 @@
  function init() {
 
  }
+ 
+ 
+ 
+ var jsonfile='def_content.json';   //*******fichier json*******
+ 
 var nextLabId=0;
 var nextLabLat=0;
 var nextLabLng=0;
@@ -13,8 +18,7 @@ var watchID;
 var lastLabId=0;
 var GeoMarker ;
 var photoSwipe;
-//var dirService;
-//var dirRenderer;
+
 var centerPos;
 var deviceready=false;
 var contentType="";
@@ -42,7 +46,7 @@ function onDeviceReady() {
 	
 	//options = { timeout: 2000 };
 	
-	watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+	//watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 	
     }
 $(document).ready(function(){
@@ -65,6 +69,7 @@ $(document).ready(function(){
 	options = {enableHighAccuracy:true,frequency:2000 };
 	// pour gallerie photoswipe
 	genererCarte();
+
 /*	dirService = new google.maps.DirectionsService();
 	dirRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true, preserveViewport: true});
 	dirRenderer.setMap(gmap);*/
@@ -93,15 +98,9 @@ function onSuccess(position) { //si geolocalisation réussie
 	if (geolocActivated==true) {
 		//$("#geotest").html(" latitude : "+position.coords.latitude +", longitude : " + position.coords.longitude);
 		//suivre la position de l'utilisateur
-		//*****ne fonctionne pas*****
-		/*if (gmap !=undefined) {
-			userCoord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-			//userPosition.setPosition(userCoord);
-			//gmap.setCenter(userCoord);
-			gmap.panTo(userCoord);
-		}*/
+		
 		//si la position a changé, regarder si l'on est près du prochain laboratoire et, si oui, afficher sa fiche
-		var margin=0.0006;
+		var margin=0.0006; //
 		
 		 if (position.coords.latitude>=nextLabLat-margin && position.coords.latitude<=nextLabLat+margin &&  position.coords.longitude>=nextLabLng-margin && position.coords.longitude<=nextLabLng+margin)
 			{
@@ -109,17 +108,7 @@ function onSuccess(position) { //si geolocalisation réussie
 			afficherLabo(nextLabId,true);
 			
 		}
-		//alert('Latitude: '          + position.coords.latitude);
-	/*	var request = {
-			origin: position.coords.latitude+","+position.coords.longitude,
-			destination: nextLabLat+","+nextLabLng,
-			travelMode: google.maps.TravelMode.DRIVING
-		};
-		dirService.route(request, function(result, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				dirRenderer.setDirections(result);
-			}
-		});*/
+	
 	}
 }
 function onError(error) {
@@ -134,11 +123,12 @@ function toggleGeoloc() {
 		GeoMarker = new GeolocationMarker(gmap);
 		GeoMarker.setPositionOptions(options);
 		centerPos=window.setInterval("gmap.panTo(GeoMarker.getPosition())",3000);
-		
+		if (watchID==undefined) 
+			watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 		if (nextLabId==0)
-			afficherLabo(nextLabId,false);
+			afficherLabo(nextLabId,"toggle");
 		else 
-			afficherLabo(nextLabId-1,false);
+			afficherLabo(nextLabId-1,"toggle");
 	
 	
 }
@@ -151,7 +141,7 @@ function reinitialiserContenu() {
 		{
 		$('#map2').hide();
 		$('#map').show();
-		$('.map').animate({
+		$('.map').stop().animate({
 	   height:(mapheight)
 	   },400);
 	  
@@ -196,7 +186,7 @@ function initialiserHomepage() {
 			</div>";
 	var i=1;
 	//parcours du fichier json
-	$.getJSON('def_content.json', function(item,index) {
+	$.getJSON(jsonfile, function(item,index) {
 		$.each(item,function(index) {
 			galleryUnlocked.push(false); // initialisation de l'état de la galerie du laboratoire
 			if (item[index].labo.id==nextLabId) {
@@ -226,19 +216,19 @@ function initialiserHomepage() {
 function afficherLabo(num,origin) {
 	
 	//var phonegapmedia;
-	nextLabId++;
+	if (origin!="toggle")	nextLabId=num+1;
 	//on arrête le suivi de position tant que l'on n'a pas terminé d'écouter le son correspondant au labo
 	if (origin==true) {
 		window.clearInterval(centerPos);
 		geolocActivated=false;
-		GeoMarker.setMap(null);
+		if (GeoMarker !=undefined) GeoMarker.setMap(null);
 		}
 	if (watchID!= undefined)
 		navigator.geolocation.clearWatch(watchID);
 	//taille et affichage de la carte
 	if (page=="home") {
 		$('#map2').show();
-		$('.map').animate({
+		$('.map').stop().animate({
 		   height:(mapheight*2)
 		   },400);
 		$('#map').hide();
@@ -249,7 +239,7 @@ function afficherLabo(num,origin) {
 	
 	//dirRenderer.setMap(null); // effacer les directions
 	//parcours du json
-	$.getJSON('def_content.json', function(item,index) {
+	$.getJSON(jsonfile, function(item,index) {
 		$.each(item,function(index) {
 			if (item[index].labo.id==num)
 			{	
@@ -285,7 +275,7 @@ function afficherLabo(num,origin) {
 				
 				//return false;
 			}
-			if (item[index].labo.id==num+1)
+			if (item[index].labo.id==nextLabId)
 				{
 				//prend les coordonnées du prochain labo
 				nextLabLat = parseFloat(item[index].labo.gps.x);
@@ -338,7 +328,7 @@ function afficherGrandeGalerie() { // affiche la liste des laboratoires dont la 
 	galleryContentHTML="";
 	galleryContentHTML+="<div> Galeries </div>";
 	var i=0;
-	$.getJSON('def_content.json', function(item,index) {
+	$.getJSON(jsonfile, function(item,index) {
 		$.each(item,function(index) {
 			if (galleryUnlocked[item[index].labo.id]==true) {		// vérifie que la galerie est débloquée
 				
@@ -372,7 +362,7 @@ function afficherGalerie(num) {  		// affiche la galerie d'un laboratoire
 		$('.map').hide(); // cache la carte pour laisser la place à l'affichage de la galerie
 		var i=0;
 		galleryContentHTML="";
-		$.getJSON('def_content.json', function(item,index) {
+		$.getJSON(jsonfile, function(item,index) {
 			$.each(item,function(index) {
 				if (item[index].labo.id==num) {
 					//galleryContentHTML+="<div> Galerie </div>";
