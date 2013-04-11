@@ -6,6 +6,7 @@
 			"x" : "43.231396",
 			"y" : "5.439964"
 		},
+		
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
 			"title": "L'histoire du campus",
@@ -49,10 +50,19 @@
 			"x" : "43.230274",
 			"y" : "5.443228"
 		},
+		"path" : [ {
+			"x":43.231259,
+			"y":5.442801
+			},
+			 {
+			"x":43.230274,
+			"y":5.443228
+			}
+		],
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
 			"title": "Conf de maths au soleil !",
-			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.ogg",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.mp3",
 			"speaker" : "Eric Picaud"
 		},
 		"photos" : [
@@ -84,8 +94,8 @@
 		"id" : "2",
 		"name" : "CIML",
 		"gps" : {
-			"x" : "43.230274",
-			"y" : "5.443228"
+			"x" : "43.233733",
+			"y" : "5.442882"
 		},
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
@@ -107,13 +117,13 @@
 		"id" : "3",
 		"name" : "IBDML",
 		"gps" : {
-			"x" : "43.230274",
-			"y" : "5.443228"
+			"x" : "43.231525",
+			"y" : "5.441128"
 		},
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
 			"title": "Les drosophiles",
-			"file": "file:///android_asset/www/knock.mp3",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.mp3",
 			"speaker" : "Nicolas Gompel"
 		},
 		"photos" : [
@@ -130,13 +140,13 @@
 		"id" : "4",
 		"name" : "CINAM",
 		"gps" : {
-			"x" : "43.230274",
-			"y" : "5.443228"
+			"x" : "43.234275",
+			"y" : "5.439696"
 		},
 		"guidingFile" : "http://...aaa.mp3",
 		"sound" : {
 			"title": "",
-			"file": "knock.mp3",
+			"file": "https://s3-eu-west-1.amazonaws.com/echoslabos/cirm/CIRM_sound.mp3",
 			"speaker" : "E."
 		},
 		"photos" : [

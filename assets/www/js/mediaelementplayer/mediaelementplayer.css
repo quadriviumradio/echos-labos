@@ -200,10 +200,10 @@
 
 /* Start: Play/pause */
 .mejs-controls .mejs-play button {
-	background-position: 11px 5px;
+	background-position: 12px 5px;
 }
 .mejs-controls .mejs-pause button {
-	background-position: 11px -40px;
+	background-position: 12px -40px;
 }
 /* End: Play/pause */
 

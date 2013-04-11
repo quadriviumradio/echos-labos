@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Echos des labos</title>
     <!--meta name="viewport"  content="target-densitydpi=high-dpi"-->
-	<!--meta name="viewport" content="width=300, user-scalable=yes" -->
+	<meta name="viewport" content="width=640, user-scalable=yes">
 	<!--meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.5"-->
     <meta name="description" content="">
     <meta name="author" content="">
@@ -27,7 +27,7 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="ico/favicon.png">
-	<script type="text/template" id="template"> </script>
+	
 
 	  <script src="js/tests/vendor/jquery.js"></script>
 	<!--script src="js/audiojs/audio.min.js"></script-->
@@ -44,10 +44,10 @@
           <p>Balade sonore à Luminy</p>
         </div>
         <div class="span2"><a href="#"><i class="ico-map"></i></a></div>
-        <div class="span2"><a href="#"><i class="ico-setting"></i></a></div>
+        <div class="span2" onclick="aPropos()"><a href="#"><i class="ico-setting"></i></a></div>
         <div class="span2" onclick="afficherGrandeGalerie()"><a href="#"><i class="ico-picture"></i></a></div>
       </div>
-      <div class="row map" id="map">
+      <div class="row map" id="map" onclick="toggleGeoloc()">
         <div class="span 12">
           <a href="#"><img src="img/bg-map.png" /></a>
         </div>
@@ -58,10 +58,23 @@
 		
 		</div>
 		</div>
-		<div id ="geotest">
-		
+		<div id="galleryContainer">
 		</div>
-	
+		
+	<div id="apropos"><h3 style="text-align:center"> Echo des labos: A propos</h3> 
+	<div> Bienvenue dans l'application Echo des labos, développée dans le cadre de l'évènement Marseille-Provence, capitale européenne de la culture 
+	2013. Cette application vous permet d'en apprendre plus sur les différents laboratoires présents sur le campus de Luminy et possède 2 modes de fonctionnement :
+	</div>
+	<ul> <li> Visite du campus: rendez vous sur le campus de Luminy afin de commencer la visite guidée, utilisant la géolocalisation de votre appareil. </li> 
+	<li> Visite virtuelle: vous pouvez également accéder aux informations sur les laboratoires où que vous soyez en le sélectionnant dans la liste</li></ul>
+	La page de chaque laboratoire contient quelques informations le concernant, ainsi qu'une bande audio qui vous en apprendra davantage sur ses activités.
+	Lorsque la lecture est terminée, le guidage reprend et la galerie correspondant à ce laboratoire devient consultable, soit via l'icône galerie présente dans la fiche, soit 
+	via la page affichant l'ensemble des galeries débloquées, accessible via l'icône se situant en haut à droite de l'écran.
+	<button class='btn btn-inverse' id='return' onclick='Retour()'> Retour à la page précédente </button>
+	</div>
+		<!--div id ="geotest">
+		
+		</div-->
 	</div>
 	</div>
     <!-- Le javascript
@@ -88,8 +101,10 @@
     <script src="js/bootstrap-typeahead.js"></script>
     <script src="js/bootstrap-affix.js"></script>
 	<script src="js/underscore-min.js"></script>
+	
 	<!--script src="js/jquery.mobile.js"></script-->
  <script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
+ <script src="js/label.js" type="text/javascript"></script>
 	<script src="js/mediaelementplayer/mediaelement-and-player.min.js"></script>
 	<link rel="stylesheet" href="js/mediaelementplayer/mediaelementplayer.css" />
 	<script>
@@ -102,7 +117,7 @@ $('video,audio').mediaelementplayer();
 	<script src="js/script.js"></script>
 	
 	<script type="text/template" id="templateHomepage">
-	<div class='span4' onclick='afficherLabo(<%=labo.id%>)'>
+	<div class='span4' onclick='afficherLabo(<%=labo.id%>,true)'>
 		<div class='module'>
 			<h2><%=labo.name%></h2>
 			<p><%=labo.sound.title%></p>
@@ -113,20 +128,25 @@ $('video,audio').mediaelementplayer();
 	
 	<script type="text/template" id="templateLabo">
 		<div class='row-fluid menu2'>
+		
 			<div class='span2'> 
 			<i class="ico-comment"></i>
 			</div>
 			<div class='span2' onclick='afficherGalerie(<%=labo.id%>)'> 
 			<i class="ico-photo"></i>
+			
 			</div>
+		
 			<div class='span8'> 
 			ESCALE <%=labo.id%>: <%=labo.name%> 
 			</div>
 		</div>
 		<div class='row-fluid content'>
 			<div class='span6'> 
-			<img src='<%=labo.photos[0].file%>'> 
+				<div class="tooltip">Galerie débloquée ! <div class="arrow"></div></div>
+			<img style='height:160px; margin-top:10px'  onclick='afficherGalerie(<%=labo.id%>)' src='<%=labo.photos[0].file%>'> 
 			</div>
+			
 			<div class='span6' id="info-labo">
 				 <div class='module'> 
 					<h2><%=labo.name%></h2>
@@ -136,8 +156,12 @@ $('video,audio').mediaelementplayer();
 				<source src='<%=labo.sound.file%>'>
 				</audio>
 			</div>	
+			
 		</div>
-	
+		<div class ='row-fluid' id="boutons">
+		<button class='btn btn-inverse' id='prec' onclick='afficherLabo(<%=parseInt(labo.id)-1%>,true)'> Précédent </button>
+		<button class='btn btn-inverse' id='suiv' onclick='afficherLabo(<%=parseInt(labo.id)+1%>,true)'> Suivant </button>
+		</div>
 	</script>
 
 	<script type="text/template" id="templatePhotos">
@@ -148,8 +172,8 @@ $('video,audio').mediaelementplayer();
  	</script>
 	<script type="text/template" id="templateGalerie">
 		<li> <a onclick='afficherGalerie(<%=labo.id%>)'>
-		<p><img src='<%=labo.photos[0].file%>'</p>
-		<p> <%=labo.name%> </p>
+		<p><img src='<%=labo.photos[1].file%>'</p>
+		<p> <%=labo.name%> </p></a>
 		</li>
 		
 	</script>
